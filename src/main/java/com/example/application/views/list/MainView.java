@@ -1,13 +1,14 @@
 package com.example.application.views.list;
 
-import com.example.application.Floors;
+import com.example.application.Floor;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import java.util.EnumSet;
+import java.util.List;
 
 @CssImport("custom-styles.css")
 @PageTitle("АИС Haulmont")
@@ -21,20 +22,24 @@ public class MainView extends VerticalLayout {
 
   private final H1 room = new H1("ROOM");
 
+  private final Button addRoomButton = new Button("ADD");
+
+  private final List<Floor> floors = List.of(  new Floor(1), new Floor(2), new Floor(3));
+
   public MainView() {
     configureClasses();
 
-    Floors.FIRST.getButton().addClickListener(buttonClickEvent -> {
+    floors.get(0).getButton().addClickListener(buttonClickEvent -> {
       removeAllFloors();
       showRooms(1);
     });
 
-    Floors.SECOND.getButton().addClickListener(buttonClickEvent -> {
+    floors.get(1).getButton().addClickListener(buttonClickEvent -> {
       removeAllFloors();
       showRooms(2);
     });
 
-    Floors.THIRD.getButton().addClickListener(buttonClickEvent -> {
+    floors.get(2).getButton().addClickListener(buttonClickEvent -> {
       removeAllFloors();
       showRooms(3);
     });
@@ -51,19 +56,23 @@ public class MainView extends VerticalLayout {
     the.setClassName("the");
     floor.setClassName("floor");
     room.setClassName("room");
+    addRoomButton.setClassName("add-button");
     menu.add(choose, the, floor);
-    menu.add(Floors.FIRST.getButton(),Floors.SECOND.getButton() , Floors.THIRD.getButton());
+    menu.add(floors.get(0).getButton(),floors.get(1).getButton() , floors.get(2).getButton());
   }
 
   private void removeAllFloors() {
-    EnumSet<Floors> floors = EnumSet.of(Floors.FIRST, Floors.SECOND, Floors.THIRD);
-    floors.forEach(floor -> floor.getButton().setClassName("big-button-stub"));
+    floors.forEach(aFloor -> aFloor.getButton().setClassName("big-button-stub"));
     floor.setClassName("floor-stub");
 
   }
 
   private void showRooms(int floor) {
+    menu.remove(floors.get(0).getButton());
+    menu.remove(floors.get(1).getButton());
+    menu.remove(floors.get(2).getButton());
     menu.add(room);
+    menu.add(addRoomButton);
 //    switch (floor) {
 //      case 1 -> {
 //
