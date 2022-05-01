@@ -1,53 +1,43 @@
 package com.example.application;
 
+import com.vaadin.flow.component.button.Button;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
 
-  private int num;
+  private final int num;
+  private final boolean isFree;
+  private final Button button;
+  private final String bookedBy;
+  private final List<String> equip;
 
-  private boolean isFree;
-
-  private String bookedBy;
-
-  private List<String> equip;
-
-  public Table(int num, boolean isFree, String bookedBy, List<String> equip) {
+  public Table(int num, boolean isFree, String bookedBy) {
     this.num = num;
     this.isFree = isFree;
+    this.button = new Button(String.valueOf(num));
+    this.button.setClassName("big-button");
     this.bookedBy = bookedBy;
-    this.equip = equip;
+    this.equip = new ArrayList<>();
   }
 
   public int getNum() {
     return num;
   }
 
-  public void setNum(int num) {
-    this.num = num;
-  }
-
   public boolean isFree() {
     return isFree;
   }
 
-  public void setFree(boolean free) {
-    isFree = free;
+  public Button getButton() {
+    return button;
   }
 
   public String getBookedBy() {
     return bookedBy;
   }
 
-  public void setBookedBy(String bookedBy) {
-    this.bookedBy = bookedBy;
-  }
-
   public List<String> getEquip() {
     return equip;
-  }
-
-  public void setEquip(List<String> equip) {
-    this.equip = equip;
   }
 }
