@@ -175,8 +175,9 @@ public class MainView extends VerticalLayout {
       formLayout.add(bookedByField);
       var addButton = new Button("ADD");
       addButton.setClassName("add-button");
-      var employee = bookedByField.getValue();
       addButton.addClickListener(buttonClickEvent1 -> {
+        var employee = bookedByField.getValue();
+        table.getButton().setText(numberField.getValue());
         table.setNum(Integer.parseInt(numberField.getValue()));
         table.setFree(Objects.isNull(employee));
         table.getBookedByField().setValue(employee);
@@ -233,7 +234,14 @@ public class MainView extends VerticalLayout {
   }
 
   private void showTables() {
-    currRoom.getTables().forEach(aTable -> menu.add(aTable.getButton()));
+    currRoom.getTables().forEach(aTable -> {
+      if (aTable.isFree()){
+        aTable.getButton().setClassName("big-button");
+      } else {
+        aTable.getButton().setClassName("big-button-booked");
+      }
+      menu.add(aTable.getButton());
+    });
   }
 
 }

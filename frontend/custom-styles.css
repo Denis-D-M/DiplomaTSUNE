@@ -16,6 +16,24 @@
   animation-duration: 1s;
  }
 
+.big-button-booked {
+  height: 150px;
+  width: 150px;
+  font-size: 75px;
+  color: #000000;
+  font-family: "Roboto", sans-serif;
+  border: 4px solid #02b3cd;
+  border-radius: 0px;
+  padding: 16px 24px;
+  position: relative;
+  background-color: transparent;
+  align-items: center;
+  top: 100px;
+  margin: 30px;
+  animation-name: button;
+  animation-duration: 1s;
+ }
+
  .big-button-delete {
    height: 150px;
    width: 150px;
