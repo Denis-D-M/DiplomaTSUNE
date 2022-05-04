@@ -15,6 +15,8 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -107,6 +109,7 @@ public class MainView extends VerticalLayout {
       addButton.setClassName("add-button");
       addButton.addClickListener(buttonClickEvent1 -> {
         floors.get(currFloor).getRooms().add(new Room(Integer.parseInt(numberField.getValue())));
+        floors.get(currFloor).getRooms().sort(Comparator.comparingInt(Room::getNum));
         floors.get(currFloor).getRooms()
             .forEach(aRoom -> aRoom.getButton().addClickListener(aButtonEvent -> {
               currRoom = aRoom;
@@ -191,6 +194,7 @@ public class MainView extends VerticalLayout {
             aTable.getDialog().open();
           }
         }));
+
         showTables();
         dialog.close();
         dialog.remove(addButton);
@@ -212,7 +216,7 @@ public class MainView extends VerticalLayout {
             menu.remove(tableButton);
             iterator.remove();
           }
-          tableButton.setClassName("big-button");
+          showTables();
         }
       }
     });
