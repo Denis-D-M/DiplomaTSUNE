@@ -49,6 +49,7 @@ public class MainView extends VerticalLayout {
   public MainView() {
     configureClasses();
 
+    floors.stream().map(Floor::getButton).forEach(button -> button.addFocusListener(event -> button.setText("0")));
     add(menu);
     setSizeFull();
     setAlignItems(Alignment.STRETCH);
@@ -109,7 +110,6 @@ public class MainView extends VerticalLayout {
       addButton.setClassName("add-button");
       addButton.addClickListener(buttonClickEvent1 -> {
         floors.get(currFloor).getRooms().add(new Room(Integer.parseInt(numberField.getValue())));
-        floors.get(currFloor).getRooms().sort(Comparator.comparingInt(Room::getNum));
         floors.get(currFloor).getRooms()
             .forEach(aRoom -> aRoom.getButton().addClickListener(aButtonEvent -> {
               currRoom = aRoom;
@@ -206,21 +206,21 @@ public class MainView extends VerticalLayout {
 
     deleteWorkplaceButton.addClickListener(buttonClickEvent -> {
       isDeleteActive = !isDeleteActive;
-      for (var iterator = currRoom.getTables().iterator(); iterator.hasNext(); ) {
-        var aTable = iterator.next();
-        var tableButton = aTable.getButton();
-        if (isDeleteActive) {
-          tableButton.setClassName("big-button-delete");
-        } else {
+      if (isDeleteActive) {
+        currRoom.getTables().stream().map(Table::getButton).forEach(button -> button.setClassName("big-button-delete"));
+      } else {
+        for (var iterator = currRoom.getTables().iterator(); iterator.hasNext(); ) {
+          var aTable = iterator.next();
+          var tableButton = aTable.getButton();
           if ("big-button-delete-stub".equals(aTable.getButton().getClassName())) {
             menu.remove(tableButton);
             iterator.remove();
           }
-          showTables();
         }
+        showTables();
       }
     });
-  }
+}
 
   private void removeAllFloors() {
     floors.forEach(aFloor -> aFloor.getButton().setClassName("big-button-stub"));
@@ -238,13 +238,15 @@ public class MainView extends VerticalLayout {
   }
 
   private void showTables() {
-    currRoom.getTables().forEach(aTable -> {
-      if (aTable.isFree()){
-        aTable.getButton().setClassName("big-button");
+    currRoom.getTables().sort(Comparator.comparingInt(value -> Integer.parseInt(value.getButton().getText())));
+    currRoom.getTables().stream().map(Table::getButton).forEach(menu::remove);
+    currRoom.getTables().forEach(table -> {
+      if (table.isFree()) {
+        table.getButton().setClassName("big-button");
       } else {
-        aTable.getButton().setClassName("big-button-booked");
+        table.getButton().setClassName("big-button-booked");
       }
-      menu.add(aTable.getButton());
+      menu.add(table.getButton());
     });
   }
 

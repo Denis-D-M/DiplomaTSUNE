@@ -1,4 +1,4 @@
-.big-button {
+.big-button, .big-button-booked, .big-button-delete, .big-button-delete-stub, .big-button-stub {
   height: 150px;
   width: 150px;
   font-size: 75px;
@@ -16,77 +16,32 @@
   animation-duration: 1s;
  }
 
+.big-button:hover {
+  color: #02b3cd;
+    border: 4px solid #02b3cd;
+}
+
 .big-button-booked {
-  height: 150px;
-  width: 150px;
-  font-size: 75px;
-  color: #000000;
-  font-family: "Roboto", sans-serif;
   border: 4px solid #02b3cd;
-  border-radius: 0px;
-  padding: 16px 24px;
-  position: relative;
-  background-color: transparent;
-  align-items: center;
-  top: 100px;
-  margin: 30px;
-  animation-name: button;
-  animation-duration: 1s;
  }
 
  .big-button-delete {
-   height: 150px;
-   width: 150px;
-   font-size: 75px;
-   color: #000000;
-   font-family: "Roboto", sans-serif;
    border: 4px solid #ff5f56;
-   border-radius: 0px;
-   padding: 16px 24px;
-   position: relative;
-   background-color: transparent;
-   align-items: center;
-   top: 100px;
-   margin: 30px;
-   animation-name: button;
-   animation-duration: 1s;
   }
 
  .big-button-delete-stub {
    opactity: 0;
-   height: 150px;
-   width: 150px;
-   font-size: 75px;
    color: #e3f1ff;
-   font-family: "Roboto", sans-serif;
    border: 4px solid #e3f1ff;
-   border-radius: 0px;
-   padding: 16px 24px;
-   position: relative;
    background-color: #e3f1ff;
-   align-items: center;
-   top: 100px;
-   margin: 30px;
    animation-name: button-delete-stub;
-   animation-duration: 1s;
   }
 
  .big-button-stub {
-   height: 150px;
-   width: 150px;
-   font-size: 75px;
    color: #e3f1ff;
-   font-family: "Roboto", sans-serif;
    border: 4px solid #e3f1ff;
-   border-radius: 0px;
-   padding: 16px 24px;
-   position: relative;
    background-color: #e3f1ff;
-   align-items: center;
-   top: 100px;
-   margin: 30px;
    animation-name: button-stub;
-   animation-duration: 1s;
   }
 
 .add-button {
