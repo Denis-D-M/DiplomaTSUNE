@@ -4,11 +4,22 @@ import com.vaadin.flow.component.button.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Этаж
+ */
 public class Floor {
 
+  /**
+   * Кнопка этажа
+   */
   private final Button button;
+  /**
+   * Номер этажа
+   */
   private final int floor;
-
+  /**
+   * Список кабинетов на этаже
+   */
   private final List<Room> rooms;
 
   public Floor(int floor) {

@@ -32,30 +32,57 @@ public class MainView extends VerticalLayout {
 
   private final H1 room = new H1("ROOM");
   private final H1 workplace = new H1("WORKPLACE");
-
+  /**
+   * Кнопка добавления кабинета
+   */
   private final Button addRoomButton = new Button("ADD");
+  /**
+   * Кнопка удаления кабинета
+   */
   private final Button deleteRoomButton = new Button("DELETE");
-
+  /**
+   * Кнопка добавления рабочего места
+   */
   private final Button addWorkplaceButton = new Button("ADD");
+  /**
+   * Кнопка удаления рабочего места
+   */
   private final Button deleteWorkplaceButton = new Button("DELETE");
-
+  /**
+   * Список этажей
+   */
   private final List<Floor> floors = List.of(new Floor(1), new Floor(2), new Floor(3));
-
+  /**
+   * Выбранный на данный момент этаж
+   */
   private int currFloor;
+  /**
+   * Выбранный на данный момент кабинет
+   */
   private Room currRoom;
-
+  /**
+   * Указатель на то, была ли нажата кнопка удаления (был ли включен режим удаления)
+   */
   private boolean isDeleteActive = false;
 
   public MainView() {
     configureClasses();
+    configureListeners();
 
-    floors.stream().map(Floor::getButton).forEach(button -> button.addFocusListener(event -> button.setText("0")));
+    // Добавление на экран начальной надписи
+    menu.add(choose, the, floor);
+    // Добавление на экран кнопок этажей
+    menu.add(floors.get(0).getButton(), floors.get(1).getButton(), floors.get(2).getButton());
+    // Добавление на главный экран основного меню
     add(menu);
     setSizeFull();
     setAlignItems(Alignment.STRETCH);
     setClassName("main");
   }
 
+  /**
+   * Присвоение css классов компонентам
+   */
   private void configureClasses() {
     menu.setClassName("menu");
     choose.setClassName("choose");
@@ -67,39 +94,55 @@ public class MainView extends VerticalLayout {
     deleteRoomButton.setClassName("delete-button");
     addWorkplaceButton.setClassName("add-button");
     deleteWorkplaceButton.setClassName("delete-button");
-    configureListeners();
-    menu.add(choose, the, floor);
-    menu.add(floors.get(0).getButton(), floors.get(1).getButton(), floors.get(2).getButton());
   }
 
+  /**
+   * Создание обработчиков событий
+   */
   private void configureListeners() {
+    // Обработчик события нажатия кнопки первого этажа
     floors.get(0).getButton().addClickListener(buttonClickEvent -> {
+      // Задание текущего этажа
       currFloor = 0;
+      // Удаление кнопок этажей
       removeAllFloors();
+      // Изменение последнего слова надписи на заднем фоне
       menu.add(room);
+      // Добавление кнопок добавления и удаления кабинетов
       menu.add(addRoomButton);
       menu.add(deleteRoomButton);
-      showRooms(1);
+      // Добавление на экран всех кабинетов текущего этажа
+      showRooms();
     });
 
     floors.get(1).getButton().addClickListener(buttonClickEvent -> {
+      // Задание текущего этажа
       currFloor = 1;
+      // Удаление кнопок этажей
       removeAllFloors();
+      // Изменение последнего слова надписи на заднем фоне
       menu.add(room);
+      // Добавление кнопок добавления и удаления кабинетов
       menu.add(addRoomButton);
       menu.add(deleteRoomButton);
-      showRooms(2);
+      // Добавление на экран всех кабинетов текущего этажа
+      showRooms();
     });
 
     floors.get(2).getButton().addClickListener(buttonClickEvent -> {
+      // Задание текущего этажа
       currFloor = 2;
+      // Удаление кнопок этажей
       removeAllFloors();
+      // Изменение последнего слова надписи на заднем фоне
       menu.add(room);
+      // Добавление кнопок добавления и удаления кабинетов
       menu.add(addRoomButton);
       menu.add(deleteRoomButton);
-      showRooms(3);
+      // Добавление на экран всех кабинетов текущего этажа
+      showRooms();
     });
-
+    // Обработчик события нажатия кнопки добавления кабинета
     addRoomButton.addClickListener(buttonClickEvent -> {
       var dialog = new Dialog();
       var formLayout = new FormLayout();
@@ -124,7 +167,7 @@ public class MainView extends VerticalLayout {
               menu.add(addWorkplaceButton);
               menu.add(deleteWorkplaceButton);
             }));
-        showRooms(currFloor);
+        showRooms();
         dialog.close();
       });
       dialog.add(formLayout, addButton);
@@ -220,21 +263,26 @@ public class MainView extends VerticalLayout {
         showTables();
       }
     });
-}
+  }
 
   private void removeAllFloors() {
+    // Изменение класса у кнопок этажей для анимированного удаления
     floors.forEach(aFloor -> aFloor.getButton().setClassName("big-button-stub"));
+    // Изменение класса у надписи для изменения последнего слова надписи
     floor.setClassName("floor-stub");
   }
 
   private void removeAllRooms() {
+    // Изменение класса у кнопок кабинетов для анимированного удаления
     floors.get(currFloor).getRooms().forEach(aRoom -> aRoom.getButton().setClassName("big-button-stub"));
+    // Изменение класса у надписи для изменения последнего слова надписи
     room.setClassName("floor-stub");
 
   }
 
-  private void showRooms(int floor) {
-    floors.get(floor).getRooms().forEach(room1 -> menu.add(room1.getButton()));
+  private void showRooms() {
+    // Добавление на экран всех кабинетов текущего этажа
+    floors.get(currFloor).getRooms().forEach(room1 -> menu.add(room1.getButton()));
   }
 
   private void showTables() {
